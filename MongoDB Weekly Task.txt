@@ -1,0 +1,124 @@
+
+1.Database & Collection Setup
+
+use studentDB
+db.createCollection("students")
+
+# Explanation:
+
+ inga 'use studentDB' nu podumbodhu andha database la poi irukum, illa na create aagidum.
+
+ 'createCollection("students")' students-nu oru collection StudentDB create aagidum.
+
+________________________________________________XXX_________________________________________
+
+2.Inserting
+
+# Insert one document
+
+db.students.insertOne({
+name: "Arun",
+age: 22,
+course: "MERN Stack",
+status: "ongoing"
+})
+
+ 'insertOne' na one data  insert panna use panrom, idhula name, age, course, status ellam kudukalam.
+
+
+# Insert multiple documents
+
+db.students.insertMany(\[
+{ name: "Bala", age: 23, course: "MERN Stack", status: "ongoing" },
+{ name: "Kavi", age: 21, course: "Java Full Stack", status: "completed" },
+{ name: "Priya", age: 24, course: "MERN Stack", status: "ongoing" }
+])
+
+ 'insertMany' name la ey iruku many datas single time la add panna mudiyum
+
+---------------------------------XXX-----------------------------------------------------------------
+ 
+3.Read Operations
+
+# Fetch all documents
+
+db.students.find()
+
+
+ 'find()' use panni collection la iruka ella data um varum.
+
+-------------------------------XXX-------------------------------------------------------------------
+
+4. fetch data using find
+
+db.students.find({ course: "MERN Stack" })
+
+'find({course: "MERN Stack"})' MERN Stack irukura students mattum varum.
+
+------------------------------XXX--------------------------------------------------------------------
+5 Update Operations
+
+
+db.students.updateOne(
+{ name: "Arun" },
+{ \$set: { status: "completed" } }
+)
+
+ 'updateOne' na oru data mattum update aagum.
+ 
+ '$set' nu podumbodhu andha field la new value set aagum.
+
+--------------------------------XXX-------------------------------------------------------------------
+
+ Update multiple documents (all MERN Stack students to completed)
+
+db.students.updateMany(
+{ course: "MERN Stack" },
+{ \$set: { status: "completed" } }
+)
+
+'updateMany' na filter ku match aagura ella data um update aagum.
+
+------------------------------------XXX----------------------------------------------------------------
+
+6.Delete Operations
+
+db.students.deleteOne({ name: "Kavi" })
+
+'deleteOne' na first match aana data remove aagum.
+
+db.students.deleteMany({})
+
+'deleteMany({})' nu empty filter podumbodhu collection la irukura ella data um delete aagidum (practice-ku dhaan).
+
+---------------------------------------XXX--------------------------------------------------------------
+
+7.Query Operators
+
+db.students.find({ age: { \$gt: 22 } })
+
+ '$gt' na greater than, 22 vida adhiga age irukura students.
+
+db.students.find({ age: { \$lt: 23 } })
+
+ '$lt' na less than, 23 vida kammiya age irukura students.
+
+db.students.find({ course: { \$in: \["MERN Stack", "Java Full Stack"] } })
+
+'$in' list la iruka values match aana students ah kandu pidikkum.
+
+db.students.find({ \$and: \[ { course: "MERN Stack" }, { age: { \$gt: 22 } } ] })
+
+'$and' na rendu conditionum true a iruka vendum.
+
+db.students.find({ \$or: \[ { course: "MERN Stack" }, { status: "completed" } ] })
+
+ '$or' na edhavadhu oru condition true a iruntha podhum.
+
+# Field exists
+
+db.students.find({ status: { \$exists: true } })
+
+# Explanation (Tanglish): `$exists` na andha field iruka vendum nu check pannum.
+
+
